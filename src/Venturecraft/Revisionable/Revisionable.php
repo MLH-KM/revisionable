@@ -92,7 +92,6 @@ class Revisionable extends Eloquent
             unset($this->attributes['keepRevisionOf']);
 
             $this->dirtyData = $this->getDirty();
-            $this->updating = $this->exists;
 
         }
 
@@ -108,7 +107,7 @@ class Revisionable extends Eloquent
     {
 
         // check if the model already exists
-        if ((!isset($this->revisionEnabled) || $this->revisionEnabled) && $this->updating) {
+        if ((!isset($this->revisionEnabled) || $this->revisionEnabled)) {
             // if it does, it means we're updating
 
             $changes_to_record = $this->changedRevisionableFields();
@@ -164,22 +163,15 @@ class Revisionable extends Eloquent
 
     /**
      * Attempt to find the user id of the currently logged in user
-     * Supports Cartalyst Sentry/Sentinel based authentication, as well as stock Auth
+     * Supports stock Auth
      **/
     private function getUserId()
     {
-        try {
-            if (class_exists($class = '\Cartalyst\Sentry\Facades\Laravel\Sentry')
-                    || class_exists($class = '\Cartalyst\Sentinel\Laravel\Facades\Sentinel')) {
-                return ($class::check()) ? $class::getUser()->id : null;
-            } elseif (\Auth::check()) {
-                return \Auth::user()->getAuthIdentifier();
-            }
-        } catch (\Exception $e) {
+        if (\Auth::check()) {
+            return \Auth::user()->getAuthIdentifier();
+        } else {
             return null;
         }
-
-        return null;
     }
 
     /**
