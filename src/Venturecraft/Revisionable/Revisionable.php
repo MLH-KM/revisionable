@@ -123,8 +123,8 @@ class Revisionable extends Eloquent
                     'old_value'             => array_get($this->originalData, $key),
                     'new_value'             => $this->updatedData[$key],
                     'user_id'               => $this->getUserId(),
-                    'created_at'            => new \DateTime(),
-                    'updated_at'            => new \DateTime(),
+                    'create_dt_tm'          => new \DateTime(),
+                    'update_dt_tm'          => new \DateTime(),
                 );
 
             }
@@ -153,8 +153,8 @@ class Revisionable extends Eloquent
                 'old_value' => null,
                 'new_value' => $this->deleted_at,
                 'user_id' => $this->getUserId(),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
+                'create_dt_tm' => new \DateTime(),
+                'update_dt_tm' => new \DateTime(),
             );
             $revision = new \Venturecraft\Revisionable\Revision;
             \DB::table($revision->getTable())->insert($revisions);
