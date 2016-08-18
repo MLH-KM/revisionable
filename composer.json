@@ -1,5 +1,5 @@
 {
-    "name": "ricksuggs/revisionable",
+    "name": "mlh-km/revisionable",
     "license": "MIT",
     "description": "Keep a revision history for your models without thinking, created as a package for use with Laravel 4",
     "keywords": ["model", "laravel", "revision", "history"],
